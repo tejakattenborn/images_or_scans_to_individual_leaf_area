@@ -69,4 +69,4 @@ for(i in 1:length(allscans)){
 }
 
 result_mean
-write.csv(result_mean, file="output/leaf_area_individual.csv", row.names = F, sep=";")
+write.table(result_mean, file="output/leaf_area_individual.csv", row.names = F, sep=";", dec=".")
