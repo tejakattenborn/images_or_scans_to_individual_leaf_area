@@ -2,7 +2,7 @@
 # total pixels: 7877250 / total cm²: 623.7
 
 require(raster)
-setwd("<PATH>") # requires an "input" and "output" folder in there
+setwd("D:/googledrive/teaching/2021_forschungspraktikum/leaf_area/") # requires an "input" and "output" folder in there
 
 
 #define factor to which scan resolution should be reduced to (increases speed / decreases memory usage)
@@ -11,7 +11,7 @@ scale_param = 1500 # height to which all images will be resampled
 min_size = 0.3
 
 
-allscans = list.files("input/", full.names = T) # should contain files of tiff, png or bmp
+allscans = list.files("input/") # should contain files of tiff, png or bmp
 result_mean = matrix(nrow=length(allscans), ncol=3)
 colnames(result_mean) = c("ID", "mean_area", "no_leaves")
 result_mean = as.data.frame(result_mean)
@@ -19,7 +19,7 @@ result_mean = as.data.frame(result_mean)
 
 for(i in 1:length(allscans)){
   
-  leafscan = raster(allscans[[i]][[1]])
+  leafscan = raster(paste0("input/",allscans[[i]][[1]]))
     leafscan = aggregate(leafscan, fact=dim(leafscan)[1]/scale_param) # resample to coarser resolution
   
   if(summary(leafscan)[5]==255){
@@ -69,4 +69,4 @@ for(i in 1:length(allscans)){
 }
 
 result_mean
-write.csv(result_mean, file="output/leaf_area_individual.csv", row.names = F)
+write.csv(result_mean, file="output/leaf_area_individual.csv", row.names = F, sep=";")
